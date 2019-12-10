@@ -1,5 +1,8 @@
 package com.mvivekanandji.gradientanimation.model;
 
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+
 /**
  * Copyright 2019 Vivekanand Mishra.
  * <p>
@@ -35,7 +38,7 @@ public class GradientItem {
      * @param duration animation duration
      * @see Gradient
      */
-    public GradientItem(Gradient gradient, int duration) {
+    public GradientItem(@NonNull Gradient gradient, @IntRange(from = 0, to = Integer.MAX_VALUE) int duration) {
         this.duration = duration;
         this.gradient = gradient;
     }
@@ -55,6 +58,7 @@ public class GradientItem {
      * @return {@code Gradient} Gradient object
      * @see Gradient
      */
+    @NonNull
     public Gradient getGradient() {
         return gradient;
     }

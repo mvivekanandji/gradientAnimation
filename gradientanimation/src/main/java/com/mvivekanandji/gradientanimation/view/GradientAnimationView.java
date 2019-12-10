@@ -95,7 +95,7 @@ public class GradientAnimationView extends View {
 
         alpha = typedArray.getInt(R.styleable.GradientAnimationView_ga_alpha,255);
         loop = typedArray.getBoolean(R.styleable.GradientAnimationView_ga_loop,true);
-        loopCount = typedArray.getInt(R.styleable.GradientAnimationView_ga_loop_count, Integer.MAX_VALUE);
+        loopCount = typedArray.getInt(R.styleable.GradientAnimationView_ga_loop_count, -1);
         gradientCount = typedArray.getInt(R.styleable.GradientAnimationView_ga_loop_count, 2);
 
         typedArray.recycle();
@@ -178,8 +178,8 @@ public class GradientAnimationView extends View {
 
         if(!loop) animationDrawable.setOneShot(true);
 
-        else{
-            int loopTime = gradientCount*loopCount*(enterDuration+exitDuration);
+        else if(loopCount > 0) {
+            long loopTime = new Long(loopCount) * gradientCount * (enterDuration + exitDuration);
 
             postDelayed(new Runnable() {
                 @Override

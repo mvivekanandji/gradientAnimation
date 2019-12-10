@@ -32,21 +32,37 @@ public class Gradient {
      * enum for gradient angle (multiple of 45 degrees)
      */
     public enum Orientation {
-        /** draw the gradient from the top to the bottom (270 degree)*/
+        /**
+         * draw the gradient from the top to the bottom (270 degree)
+         */
         TOP_BOTTOM,
-        /** draw the gradient from the top-right to the bottom-left (225 degree)*/
+        /**
+         * draw the gradient from the top-right to the bottom-left (225 degree)
+         */
         TR_BL,
-        /** draw the gradient from the right to the left (180 degree)*/
+        /**
+         * draw the gradient from the right to the left (180 degree)
+         */
         RIGHT_LEFT,
-        /** draw the gradient from the bottom-right to the top-left (135 degree)*/
+        /**
+         * draw the gradient from the bottom-right to the top-left (135 degree)
+         */
         BR_TL,
-        /** draw the gradient from the bottom to the top (90 degree)*/
+        /**
+         * draw the gradient from the bottom to the top (90 degree)
+         */
         BOTTOM_TOP,
-        /** draw the gradient from the bottom-left to the top-right (45 degree)*/
+        /**
+         * draw the gradient from the bottom-left to the top-right (45 degree)
+         */
         BL_TR,
-        /** draw the gradient from the left to the right (0 degree)*/
+        /**
+         * draw the gradient from the left to the right (0 degree)
+         */
         LEFT_RIGHT,
-        /** draw the gradient from the top-left to the bottom-right (315 degree)*/
+        /**
+         * draw the gradient from the top-left to the bottom-right (315 degree)
+         */
         TL_BR,
     }
 
@@ -68,9 +84,9 @@ public class Gradient {
     /**
      * Constructor
      *
-     * @param startColor integer color code
+     * @param startColor  integer color code
      * @param centerColor integer color code
-     * @param endColor integer color code
+     * @param endColor    integer color code
      * @param orientation Gradient.Orientation
      */
     public Gradient(int startColor, int centerColor, int endColor, Orientation orientation) {
@@ -83,23 +99,23 @@ public class Gradient {
     /**
      * Constructor
      *
-     * @param startColor String color code
+     * @param startColor  String color code
      * @param centerColor String color code
-     * @param endColor String color code
+     * @param endColor    String color code
      * @param orientation Gradient.Orientation
      */
     public Gradient(String startColor, String centerColor, String endColor, Orientation orientation) {
         this(Color.parseColor(startColor)
-                ,Color.parseColor(centerColor)
-                ,Color.parseColor(endColor)
-                ,orientation);
+                , Color.parseColor(centerColor)
+                , Color.parseColor(endColor)
+                , orientation);
     }
 
     /**
      * Constructor
      *
-     * @param startColor integer color code
-     * @param endColor integer color code
+     * @param startColor  integer color code
+     * @param endColor    integer color code
      * @param orientation Gradient.Orientation
      */
     public Gradient(int startColor, int endColor, Orientation orientation) {
@@ -111,14 +127,14 @@ public class Gradient {
     /**
      * Constructor
      *
-     * @param startColor String color code
-     * @param endColor String color code
+     * @param startColor  String color code
+     * @param endColor    String color code
      * @param orientation Gradient.Orientation
      */
     public Gradient(String startColor, String endColor, Orientation orientation) {
         this(Color.parseColor(startColor)
-                ,Color.parseColor(endColor)
-                ,orientation);
+                , Color.parseColor(endColor)
+                , orientation);
     }
 
     /**
@@ -140,7 +156,7 @@ public class Gradient {
      * @return this object
      */
     public Gradient setStartColor(String startColor) {
-       return setStartColor(Color.parseColor(startColor));
+        return setStartColor(Color.parseColor(startColor));
     }
 
     /**
@@ -241,13 +257,17 @@ public class Gradient {
      * @return new Gradient object
      * see https://webgradients.com/
      */
-    public static Gradient getInbuiltGradient(String name){
+    public static Gradient getInbuiltGradient(String name) {
         name = name.replaceAll("\\s", "");
         name = name.replaceAll("_", "");
 
-        switch (name.toLowerCase()){
-            case "warmflame": return new Gradient("#ff9a9e","#fad0c4",Orientation.BOTTOM_TOP);
-            default: return  new Gradient("#ff9a9e","#fad0c7",Orientation.BOTTOM_TOP);
+        switch (name.toLowerCase()) {
+            case "warmflame":
+                return new Gradient("#ff9a9e", "#fad0c4", Orientation.BOTTOM_TOP);
+            case "nightfade":
+                return new Gradient("#a18cd1", "#fbc2eb", Orientation.BOTTOM_TOP);
+            default:
+                return new Gradient("#ff9a9e", "#fad0c7", Orientation.BOTTOM_TOP);
         }
 
     }

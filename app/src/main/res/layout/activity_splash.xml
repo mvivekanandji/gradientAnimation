@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity">
 
+
+    <!--
+     ga_drawable :          [drawable] animation drawable background
+     ga_duration :          [integer] each animation time (default: 1000)
+
+     NOTE: ga_duration overrides ga_enter_duration and ga_exit_duration
+
+     ga_enter_duration :    [integer] animation entry duration (default: 1000)
+     ga_exit_duration :     [integer] animation exit duration (default: 1000)
+     ga_alpha :             [integer] animation alpha (0 to 255) (default: 255)
+     ga_loop :              [boolean] whether animation should loop (default: true)
+     ga_loop_count:         [integer] how many times animation should loop (default: Integer.MAX_VALUE)
+     ga_gradient_count      [integer] number of gradient in animation (default: 2)
+
+    -->
+    <com.mvivekanandji.gradientanimation.view.GradientAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ga_alpha="230"
+        app:ga_duration="1000"
+        app:ga_enter_duration="1000"
+        app:ga_exit_duration="1000"
+        app:ga_gradient_count="4"
+        app:ga_loop="true"
+        app:ga_loop_count="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--you can also supply custom drawable here-->
+    </com.mvivekanandji.gradientanimation.view.GradientAnimationView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

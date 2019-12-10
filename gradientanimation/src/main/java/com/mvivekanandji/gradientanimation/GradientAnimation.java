@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 
 import com.mvivekanandji.gradientanimation.model.Gradient;
 import com.mvivekanandji.gradientanimation.model.GradientItem;
@@ -42,15 +43,12 @@ public class GradientAnimation {
     //region member variables
     private ViewGroup viewGroup;
     private View view;
-    @DrawableRes
     private int backgroundDrawable;
     private int duration;
     private int enterDuration;
     private int exitDuration;
-    @IntRange(from = 0, to = 255)
     private int alpha;
     private boolean loop;
-    @IntRange(from = 1, to = Integer.MAX_VALUE)
     private int loopCount;
     private int gradientCount;
     private AnimationDrawable animationDrawable;
@@ -63,7 +61,7 @@ public class GradientAnimation {
      *
      * @param builder GradientAnimation.Builder
      */
-    private GradientAnimation(Builder builder) {
+    private GradientAnimation(@NonNull Builder builder) {
         initMemberVariables(builder);
 
         if (!gradientList.isEmpty() || !gradientItemList.isEmpty()) {
@@ -82,22 +80,31 @@ public class GradientAnimation {
     }
 
     /**
+     * Method to set alpha of the animation
      *
-     * @param alpha
+     * @param alpha integer in the range 0 to 255
      */
     public void setAlpha(@IntRange(from = 0, to = 255) final int alpha) {
         animationDrawable.setAlpha(alpha);
     }
 
+    /**
+     * Method to start animation
+     */
     public void startAnimation() {
-
         if (!animationDrawable.isRunning())
             animationDrawable.start();
 
         if (!loop) animationDrawable.setOneShot(true);
 
-        else {
-            int loopTime = gradientCount * loopCount * (enterDuration + exitDuration);
+        else if (loopCount > 0) {
+
+            int animCount = gradientList.size() + gradientItemList.size();
+
+            if (animCount > 0)
+                gradientCount = animCount;
+
+            long loopTime = new Long(loopCount) * gradientCount * (enterDuration + exitDuration);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -108,11 +115,19 @@ public class GradientAnimation {
         }
     }
 
+    /**
+     * Method to stop the running animation
+     */
     public void stopAnimation() {
         if (animationDrawable.isRunning())
             animationDrawable.stop();
     }
 
+    /**
+     * Method to toggle animation
+     * If animation is running itr will stop
+     * else if animation not running/stopped it will start running
+     */
     public void toggleAnimation() {
         if (animationDrawable.isRunning())
             animationDrawable.stop();
@@ -120,6 +135,9 @@ public class GradientAnimation {
             startAnimation();
     }
 
+    /**
+     * Method to reset animation
+     */
     public void resetAnimation() {
         stopAnimation();
         startAnimation();
@@ -132,12 +150,10 @@ public class GradientAnimation {
     public static class Builder {
         private ViewGroup viewGroup;
         private View view;
-        @DrawableRes
         private int backgroundDrawable;
         private int duration;
         private int enterDuration;
         private int exitDuration;
-        @IntRange(from = 0, to = 255)
         private int alpha;
         private boolean loop;
         private int loopCount;
@@ -150,9 +166,11 @@ public class GradientAnimation {
          */
         public Builder() {
             duration = -1;
+            enterDuration = 1000;
+            exitDuration = 1000;
             alpha = 255;
             loop = true;
-            loopCount = Integer.MAX_VALUE;
+            loopCount = -1;
             gradientCount = 2;
             gradientList = new ArrayList<>();
             gradientItemList = new ArrayList<>();
@@ -165,7 +183,7 @@ public class GradientAnimation {
          * @return this object
          * @see GradientItem
          */
-        public Builder addGradientItem(GradientItem gradientItem) {
+        public Builder addGradientItem(@NonNull GradientItem gradientItem) {
             this.gradientItemList.add(gradientItem);
             return this;
         }
@@ -178,7 +196,7 @@ public class GradientAnimation {
          * @return this object
          * @see GradientItem
          */
-        public Builder setGradientItem(GradientItem gradientItem) {
+        public Builder setGradientItem(@NonNull GradientItem gradientItem) {
             this.gradientItemList.clear();
             return addGradientItem(gradientItem);
         }
@@ -190,7 +208,7 @@ public class GradientAnimation {
          * @return this object
          * @see GradientItem
          */
-        public Builder addGradientItems(List<GradientItem> gradientItems) {
+        public Builder addGradientItems(@NonNull List<GradientItem> gradientItems) {
             this.gradientItemList.addAll(gradientItems);
             return this;
         }
@@ -203,7 +221,7 @@ public class GradientAnimation {
          * @return this object
          * @see GradientItem
          */
-        public Builder setGradientItems(List<GradientItem> gradientItems) {
+        public Builder setGradientItems(@NonNull List<GradientItem> gradientItems) {
             this.gradientItemList.clear();
             return addGradientItems(gradientItems);
         }
@@ -214,7 +232,7 @@ public class GradientAnimation {
          * @param gradientItem GradientItem
          * @return this object
          */
-        public Builder removeGradientItem(GradientItem gradientItem) {
+        public Builder removeGradientItem(@NonNull GradientItem gradientItem) {
             this.gradientItemList.remove(gradientItem);
             return this;
         }
@@ -225,7 +243,7 @@ public class GradientAnimation {
          * @param gradientItems List<GradientItem>
          * @return this object
          */
-        public Builder removeGradientItems(List<GradientItem> gradientItems) {
+        public Builder removeGradientItems(@NonNull List<GradientItem> gradientItems) {
             this.gradientItemList.removeAll(gradientItems);
             return this;
         }
@@ -247,7 +265,7 @@ public class GradientAnimation {
          * @return this object
          * @see Gradient
          */
-        public Builder addGradient(Gradient gradient) {
+        public Builder addGradient(@NonNull Gradient gradient) {
             this.gradientList.add(gradient);
             return this;
         }
@@ -260,7 +278,7 @@ public class GradientAnimation {
          * @return this object
          * @see Gradient
          */
-        public Builder setGradient(Gradient gradient) {
+        public Builder setGradient(@NonNull Gradient gradient) {
             this.gradientList.clear();
             return addGradient(gradient);
         }
@@ -272,7 +290,7 @@ public class GradientAnimation {
          * @return this object
          * @see Gradient
          */
-        public Builder addGradients(List<Gradient> gradients) {
+        public Builder addGradients(@NonNull List<Gradient> gradients) {
             this.gradientList.addAll(gradients);
             return this;
         }
@@ -285,7 +303,7 @@ public class GradientAnimation {
          * @return this object
          * @see Gradient
          */
-        public Builder setGradients(List<Gradient> gradients) {
+        public Builder setGradients(@NonNull List<Gradient> gradients) {
             this.gradientList.clear();
             return addGradients(gradients);
         }
@@ -296,7 +314,7 @@ public class GradientAnimation {
          * @param gradient Gradient
          * @return this object
          */
-        public Builder removeGradient(Gradient gradient) {
+        public Builder removeGradient(@NonNull Gradient gradient) {
             this.gradientList.remove(gradient);
             return this;
         }
@@ -307,7 +325,7 @@ public class GradientAnimation {
          * @param gradients List<Gradient>
          * @return this object
          */
-        public Builder removeGradients(List<Gradient> gradients) {
+        public Builder removeGradients(@NonNull List<Gradient> gradients) {
             this.gradientList.removeAll(gradients);
             return this;
         }
@@ -322,37 +340,37 @@ public class GradientAnimation {
             return this;
         }
 
-        public Builder setViewGroup(ViewGroup viewGroup) {
+        public Builder setViewGroup(@NonNull ViewGroup viewGroup) {
             this.viewGroup = viewGroup;
             return this;
         }
 
-        public Builder setView(View view) {
+        public Builder setView(@NonNull View view) {
             this.view = view;
             return this;
         }
 
-        public Builder setBackgroundDrawable(int backgroundDrawable) {
+        public Builder setBackgroundDrawable(@NonNull @DrawableRes int backgroundDrawable) {
             this.backgroundDrawable = backgroundDrawable;
             return this;
         }
 
-        public Builder setDuration(int duration) {
+        public Builder setDuration(@IntRange(from = 0, to = Integer.MAX_VALUE) int duration) {
             this.duration = duration;
             return this;
         }
 
-        public Builder setEnterDuration(int enterDuration) {
+        public Builder setEnterDuration(@IntRange(from = 0, to = Integer.MAX_VALUE) int enterDuration) {
             this.enterDuration = enterDuration;
             return this;
         }
 
-        public Builder setExitDuration(int exitDuration) {
+        public Builder setExitDuration(@IntRange(from = 0, to = Integer.MAX_VALUE) int exitDuration) {
             this.exitDuration = exitDuration;
             return this;
         }
 
-        public Builder setAlpha(int alpha) {
+        public Builder setAlpha(@IntRange(from = 0, to = 255) final int alpha) {
             this.alpha = alpha;
             return this;
         }
@@ -362,12 +380,12 @@ public class GradientAnimation {
             return this;
         }
 
-        public Builder setLoopCount(int loopCount) {
+        public Builder setLoopCount(@IntRange(from = 0, to = Integer.MAX_VALUE) final int loopCount) {
             this.loopCount = loopCount;
             return this;
         }
 
-        public Builder setGradientCount(int gradientCount) {
+        public Builder setGradientCount(@IntRange(from = 0, to = Integer.MAX_VALUE) int gradientCount) {
             this.gradientCount = gradientCount;
             return this;
         }
