@@ -1,0 +1,2 @@
+include ':app', ':gradientanimation'
+rootProject.name='Gradient Animation'

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GradientAnimationView">
+        <attr name="ga_drawable" format="reference"/>
+        <attr name="ga_duration" format="integer"/>
+        <attr name="ga_enter_duration" format="integer"/>
+        <attr name="ga_exit_duration" format="integer"/>
+        <attr name="ga_alpha" format="integer"/>
+        <attr name="ga_loop" format="boolean"/>
+        <attr name="ga_loop_count" format="integer"/>
+        <attr name="ga_gradient_count" format="integer"/>
+    </declare-styleable>
+</resources>
