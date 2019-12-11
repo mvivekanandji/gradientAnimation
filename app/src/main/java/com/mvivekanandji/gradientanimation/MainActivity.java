@@ -53,24 +53,20 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-//        final GradientAnimation gradientAnimationLayout = new GradientAnimation.Builder()
-//                .setViewGroup(scrollView)
-//                .setBackgroundDrawable(R.drawable.anim)
-//                .setDuration(2000)
-//                .build();
-//
+        final GradientAnimation gradientAnimationLayout = new GradientAnimation.Builder()
+                .setViewGroup(scrollView)
+                .setBackgroundDrawable(R.drawable.anim)
+                .setDuration(2000)
+                .build();
+
 //        gradientAnimationLayout.startAnimation();
 
         String[] strings = new String[]{"#000000","#aaaaaa","ffffff","#eeeeee"};
 
         GradientAnimation.Builder builderButton = new GradientAnimation.Builder()
                 .setView(buttonStart)
-//                .addGradient(Gradient.getInbuiltGradient("black"))
-//                .addGradient(Gradient.getInbuiltGradient("white"))
-//                .addGradient(new Gradient(new int[]{22,22,22,22},Gradient.Orientation.BOTTOM_TOP))
-                .addGradientItem(new GradientItem(new Gradient("#000000","#222222","#aaddff"),2000))
-                .addGradientItem(new GradientItem(new Gradient(new String[]{"#000000","#008577","#eeeeee","#D81B60","#ffffff"}),2000))
-                .addGradientItem(new GradientItem(Gradient.getInbuiltGradient("white"),2000))
+                .addGradient(Gradient.getInbuiltGradient("youngpassion"))
+                .addGradient(Gradient.getInbuiltGradient("temptingazure"))
 //                .setEnterDuration(1500)
 //                .setExitDuration(1500)
 //                .setDuration(1000)
@@ -79,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         builderButton.build().startAnimation();
 
 
-//        buttonStart.setOnClickListener(v -> gradientAnimationLayout.startAnimation());
-//        buttonStop.setOnClickListener(v -> gradientAnimationLayout.stopAnimation());
-//        buttonReset.setOnClickListener( v -> gradientAnimationLayout.resetAnimation());
-//        buttonToggle.setOnClickListener(v -> gradientAnimationLayout.toggleAnimation());
+        buttonStart.setOnClickListener(v -> gradientAnimationLayout.startAnimation());
+        buttonStop.setOnClickListener(v -> gradientAnimationLayout.stopAnimation());
+        buttonReset.setOnClickListener( v -> gradientAnimationLayout.resetAnimation());
+        buttonToggle.setOnClickListener(v -> gradientAnimationLayout.toggleAnimation());
     }
 
 

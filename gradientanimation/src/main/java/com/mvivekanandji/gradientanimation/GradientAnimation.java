@@ -436,24 +436,35 @@ public class GradientAnimation {
     }
 
     /**
-     * Method to initialize gradientItem arraylist
+     * Method to initialize gradientItem arrayList
      */
     private void initGradientItemList() {
-        for (GradientItem gradientItem : gradientItemList)
-            animationDrawable.addFrame
-                    (new GradientDrawable(Gradient.getDrawableOrientation
+        for (GradientItem gradientItem : gradientItemList) {
+            GradientDrawable gradientDrawable =
+                    new GradientDrawable(Gradient.getDrawableOrientation
                             (gradientItem.getGradient().getOrientation()),
-                            gradientItem.getGradient().getColors()),
-                            gradientItem.getDuration());
+                            gradientItem.getGradient().getColors());
+            gradientDrawable.mutate();
+            gradientDrawable.setCornerRadii(gradientItem.getGradient().getRadii());
+
+
+            animationDrawable.addFrame(gradientDrawable, gradientItem.getDuration());
+        }
     }
 
     /**
-     * Method to initialize gradient arraylist
+     * Method to initialize gradient arrayList
      */
     private void initGradientList() {
-        for (Gradient gradient : gradientList)
-            animationDrawable.addFrame(new GradientDrawable(Gradient.getDrawableOrientation
-                    (gradient.getOrientation()), gradient.getColors()), duration);
+        for (Gradient gradient : gradientList) {
+            GradientDrawable gradientDrawable =
+                    new GradientDrawable(Gradient.getDrawableOrientation
+                            (gradient.getOrientation()), gradient.getColors());
+            gradientDrawable.mutate();
+            gradientDrawable.setCornerRadii(gradient.getRadii());
+
+            animationDrawable.addFrame(gradientDrawable, duration);
+        }
     }
 
     /**

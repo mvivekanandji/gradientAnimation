@@ -72,8 +72,8 @@ public class Gradient {
         TL_BR,
     }
 
-    private float[] radii; // TODO: 11-12-2019 implement radius and radii
-    private int[] colors; // TODO: 11-12-2019 implement colors[]( possibly chnage entire class)
+    private float[] radii = new float[]{0f,0f,0f,0f,0f,0f,0f,0f};
+    private int[] colors;
     private Orientation orientation;
 
     /**
@@ -219,19 +219,50 @@ public class Gradient {
 
 
     /**
-     * Getter - to get
+     * Getter - to get radius
+     * This methods will return only the top-left corner radius,
+     * even if radius of other corners are different.
+     * To get individual corner radius {@link Gradient#getRadii()}
      *
-     * @return
+     * @return radius
+     */
+    public float getRadius(){
+        return radii[0];
+    }
+
+    /**
+     * Setter - to set radius
+     * Same radius is set to all the corners.
+     * To change individual corners {@link Gradient#setRadii(float[])}
+     *
+     * @param radius radius for all corners
+     * @return this object
+     */
+    public Gradient setRadius(float radius){
+        setRadii(new float[]{radius,radius,radius,radius,radius,radius,radius,radius});
+        return this;
+    }
+
+    /**
+     * Getter - to get radii
+     * Returns the radii for each of the 4 corners. For each corner, the array
+     * contains 2 values, <code>[X_radius, Y_radius]</code>. The corners are
+     * ordered top-left, top-right, bottom-right, bottom-left.
+     *
+     * @return radii
      */
     public float[] getRadii() {
         return radii;
     }
 
     /**
-     * Setter - to set
+     * Setter - to set radii
+     * Specifies radii for each of the 4 corners. For each corner, the array
+     * contains 2 values, <code>[X_radius, Y_radius]</code>. The corners are
+     * ordered top-left, top-right, bottom-right, bottom-left.
      *
-     * @param radii
-     * @return
+     * @param radii radius of all corners
+     * @return this object
      */
     public Gradient setRadii(float[] radii) {
         this.radii = radii;
@@ -241,7 +272,7 @@ public class Gradient {
     /**
      * Getter - to get colors array
      *
-     * @return
+     * @return colors array
      */
     public int[] getColors() {
         return colors;
@@ -250,8 +281,8 @@ public class Gradient {
     /**
      * Setter - to set colors array
      *
-     * @param colors
-     * @return
+     * @param colors colors array
+     * @return this object
      */
     public Gradient setColors(int[] colors) {
         this.colors = colors;
@@ -278,8 +309,6 @@ public class Gradient {
         return this;
     }
 
-
-    // TODO: 11-12-2019 implement this getInbuiltGradient(String name, int[] colors)
     /**
      * Method to get inbuilt gradients.
      *
@@ -295,14 +324,36 @@ public class Gradient {
 
 
         switch (name.toLowerCase()) {
-            case "black":
-                return new Gradient("#000000","#000000",Orientation.BOTTOM_TOP);
-            case "white":
-                return new Gradient("#ffffff","#ffffff",Orientation.BOTTOM_TOP);
             case "warmflame":
                 return new Gradient("#ff9a9e", "#fad0c4", Orientation.BOTTOM_TOP);
             case "nightfade":
                 return new Gradient("#a18cd1", "#fbc2eb", Orientation.BOTTOM_TOP);
+            case "springwarmth":
+                return new Gradient("#fad0c4", "#ffd1ff", Orientation.BOTTOM_TOP);
+            case "juicypeach":
+                return new Gradient("#ffecd2", "#fcb69f", Orientation.BOTTOM_TOP);
+            case "youngpassion":
+                return new Gradient(new String[]{"#ff8177","#ff867a","#ff8c7f","#f99185","#cf556c","#b12a5b"}, Orientation.BOTTOM_TOP);
+            case "ladylips":
+                return new Gradient("#ff9a9e", "#fecfef", Orientation.BOTTOM_TOP);
+            case "sundaymorning":
+                return new Gradient("#f6d365", "#fda085", Orientation.BOTTOM_TOP);
+            case "rainyashville":
+                return new Gradient("#fbc2eb", "#a6c1ee", Orientation.BOTTOM_TOP);
+            case "frozendreams":
+                return new Gradient("#fdcbf1", "#e6dee9", Orientation.BOTTOM_TOP);
+            case "winterneva":
+                return new Gradient("#a1c4fd", "#c2e9fb", Orientation.BOTTOM_TOP);
+            case "dustygrass":
+                return new Gradient("#d4fc79", "#96e6a1", Orientation.BOTTOM_TOP);
+            case "temptingazure":
+                return new Gradient("#84fab0", "#8fd3f4", Orientation.BOTTOM_TOP);
+            case "heavyrain":
+                return new Gradient("#cfd9df", "#e2ebf0", Orientation.BOTTOM_TOP);
+            case "amycrisp":
+                return new Gradient("#a6c0fe", "#f68084", Orientation.BOTTOM_TOP);
+            case "meanfruit":
+                return new Gradient("#fccb90", "#d57eeb", Orientation.BOTTOM_TOP);
             default:
                 return new Gradient("#ff9a9e", "#fad0c7", Orientation.BOTTOM_TOP);
         }
