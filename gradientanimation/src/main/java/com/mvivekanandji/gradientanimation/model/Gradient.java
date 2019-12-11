@@ -3,6 +3,12 @@ package com.mvivekanandji.gradientanimation.model;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Copyright 2019 Vivekanand Mishra.
  * <p>
@@ -66,9 +72,8 @@ public class Gradient {
         TL_BR,
     }
 
-    private int startColor;
-    private int centerColor = -1;
-    private int endColor;
+    private float[] radii; // TODO: 11-12-2019 implement radius and radii
+    private int[] colors; // TODO: 11-12-2019 implement colors[]( possibly chnage entire class)
     private Orientation orientation;
 
     /**
@@ -84,16 +89,67 @@ public class Gradient {
     /**
      * Constructor
      *
+     * @param colors integer array of color codes
+     * @param orientation Gradient.Orientation
+     */
+    public Gradient(int[] colors, Orientation orientation){
+        this.colors = colors;
+        this.orientation = orientation;
+    }
+
+    /**
+     * Constructor
+     *
+     * @param colors integer array of color codes
+     */
+    public Gradient(int[] colors){
+        this(colors,Orientation.BOTTOM_TOP);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param colors string array of color codes
+     * @param orientation Gradient.Orientation
+     */
+    public Gradient(String[] colors, Orientation orientation){
+        this.colors = new int[colors.length];
+        this.orientation = orientation;
+
+        for(int i=0; i<colors.length; i++)
+            this.colors[i] = Color.parseColor(colors[i]);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param colors string array of color codes
+     */
+    public Gradient(String[] colors){
+        this(colors, Orientation.BOTTOM_TOP);
+    }
+
+    /**
+     * Constructor
+     *
      * @param startColor  integer color code
      * @param centerColor integer color code
      * @param endColor    integer color code
      * @param orientation Gradient.Orientation
      */
     public Gradient(int startColor, int centerColor, int endColor, Orientation orientation) {
-        this.startColor = startColor;
-        this.centerColor = centerColor;
-        this.endColor = endColor;
-        this.orientation = orientation;
+        this(new int[]{startColor,centerColor,endColor},orientation);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param startColor integer color code
+     * @param centerColor integer color code
+     * @param endColor integer color code
+     */
+    public Gradient(int startColor, int centerColor, int endColor){
+        this(startColor, centerColor, endColor, Orientation.BOTTOM_TOP);
     }
 
     /**
@@ -105,10 +161,18 @@ public class Gradient {
      * @param orientation Gradient.Orientation
      */
     public Gradient(String startColor, String centerColor, String endColor, Orientation orientation) {
-        this(Color.parseColor(startColor)
-                , Color.parseColor(centerColor)
-                , Color.parseColor(endColor)
-                , orientation);
+       this(new String[]{startColor,centerColor,endColor},orientation);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param startColor  String color code
+     * @param centerColor String color code
+     * @param endColor    String color code
+     */
+    public Gradient(String startColor, String centerColor, String endColor){
+        this(startColor, centerColor, endColor, Orientation.BOTTOM_TOP);
     }
 
     /**
@@ -119,9 +183,17 @@ public class Gradient {
      * @param orientation Gradient.Orientation
      */
     public Gradient(int startColor, int endColor, Orientation orientation) {
-        this.startColor = startColor;
-        this.endColor = endColor;
-        this.orientation = orientation;
+        this(new int[]{startColor,endColor},orientation);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param startColor  integer color code
+     * @param endColor    integer color code
+     */
+    public Gradient(int startColor, int endColor){
+        this(startColor,endColor,Orientation.BOTTOM_TOP);
     }
 
     /**
@@ -132,73 +204,67 @@ public class Gradient {
      * @param orientation Gradient.Orientation
      */
     public Gradient(String startColor, String endColor, Orientation orientation) {
-        this(Color.parseColor(startColor)
-                , Color.parseColor(endColor)
-                , orientation);
+        this(new String[]{startColor,endColor},orientation);
     }
 
     /**
-     * Setter - to set start color of gradient
+     * Constructor
      *
-     * @param startColor integer color code
-     * @return this object
+     * @param startColor  String color code
+     * @param endColor    String color code
      */
-    public Gradient setStartColor(int startColor) {
-        this.startColor = startColor;
-        return this;
+    public Gradient(String startColor, String endColor){
+        this(startColor,endColor, Orientation.BOTTOM_TOP);
     }
 
 
     /**
-     * Setter - to set start color of gradient
+     * Getter - to get
      *
-     * @param startColor String color code
-     * @return this object
+     * @return
      */
-    public Gradient setStartColor(String startColor) {
-        return setStartColor(Color.parseColor(startColor));
+    public float[] getRadii() {
+        return radii;
     }
 
     /**
-     * Setter - to set center color of gradient
+     * Setter - to set
      *
-     * @param centerColor integer color code
-     * @return this object
+     * @param radii
+     * @return
      */
-    public Gradient setCenterColor(int centerColor) {
-        this.centerColor = centerColor;
+    public Gradient setRadii(float[] radii) {
+        this.radii = radii;
         return this;
     }
 
     /**
-     * Setter - to set center color of gradient
+     * Getter - to get colors array
      *
-     * @param centerColor String color code
-     * @return this object
+     * @return
      */
-    public Gradient setCenterColor(String centerColor) {
-        return setStartColor(Color.parseColor(centerColor));
+    public int[] getColors() {
+        return colors;
     }
 
     /**
-     * Setter - to set end color of gradient
+     * Setter - to set colors array
      *
-     * @param endColor integer color code
-     * @return this object
+     * @param colors
+     * @return
      */
-    public Gradient setEndColor(int endColor) {
-        this.endColor = endColor;
+    public Gradient setColors(int[] colors) {
+        this.colors = colors;
         return this;
     }
 
     /**
-     * Setter - to set end color of gradient
+     * Getter - to get Gradient.Orientation
      *
-     * @param endColor String color code
-     * @return this object
+     * @return Gradient.Orientation
      */
-    public Gradient setEndColor(String endColor) {
-        return setStartColor(Color.parseColor(endColor));
+    public Orientation getOrientation() {
+        return orientation;
     }
 
     /**
@@ -212,56 +278,27 @@ public class Gradient {
         return this;
     }
 
-    /**
-     * Getter - to get start color of gradient
-     *
-     * @return int start color
-     */
-    public int getStartColor() {
-        return startColor;
-    }
 
-    /**
-     * Getter - to get center color of gradient
-     *
-     * @return int center color
-     */
-    public int getCenterColor() {
-        return centerColor;
-    }
-
-    /**
-     * Getter - to get end color of gradient
-     *
-     * @return int end color
-     */
-    public int getEndColor() {
-        return endColor;
-    }
-
-    /**
-     * Getter - to get Gradient.Orientation
-     *
-     * @return Gradient.Orientation
-     */
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
+    // TODO: 11-12-2019 implement this getInbuiltGradient(String name, int[] colors)
     /**
      * Method to get inbuilt gradients.
      *
-     * @param name gradient name. "name" can be in any case, with or without space, with or without _"
+     * @param name gradient name see https://webgradients.com/.
+     *             "name" can be in any case, with or without space, with or without _"
      *             (eg. "warmFlame", "warmflame", warm flame", "Warm Flame", "warm flame",
      *             "WARM FLAME","WARMFLAME, "WARM_FLAME, "warm_flame" etc all are allowed)
      * @return new Gradient object
-     * see https://webgradients.com/
      */
-    public static Gradient getInbuiltGradient(String name) {
+    public static Gradient getInbuiltGradient(@NonNull String name) {
         name = name.replaceAll("\\s", "");
         name = name.replaceAll("_", "");
 
+
         switch (name.toLowerCase()) {
+            case "black":
+                return new Gradient("#000000","#000000",Orientation.BOTTOM_TOP);
+            case "white":
+                return new Gradient("#ffffff","#ffffff",Orientation.BOTTOM_TOP);
             case "warmflame":
                 return new Gradient("#ff9a9e", "#fad0c4", Orientation.BOTTOM_TOP);
             case "nightfade":
@@ -269,6 +306,5 @@ public class Gradient {
             default:
                 return new Gradient("#ff9a9e", "#fad0c7", Orientation.BOTTOM_TOP);
         }
-
     }
 }

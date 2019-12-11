@@ -3,6 +3,7 @@ package com.mvivekanandji.gradientanimation;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -165,9 +166,10 @@ public class GradientAnimation {
          * Constructor
          */
         public Builder() {
-            duration = -1;
-            enterDuration = 1000;
-            exitDuration = 1000;
+            backgroundDrawable = -1;
+            duration = 2000;
+            enterDuration = -1;
+            exitDuration = -1;
             alpha = 255;
             loop = true;
             loopCount = -1;
@@ -429,7 +431,7 @@ public class GradientAnimation {
      * if both drawable as well individual gradients are provided
      */
     private void checkBackgroundDrawable() {
-        if (backgroundDrawable != 0)
+        if (backgroundDrawable >= 0)
             throw new IllegalArgumentException("Don't supply drawable when using Gradient or GradientItem");
     }
 
@@ -437,51 +439,21 @@ public class GradientAnimation {
      * Method to initialize gradientItem arraylist
      */
     private void initGradientItemList() {
-        for (GradientItem gradientItem : gradientItemList) {
-            int[] colors;
-
-            if (gradientItem.getGradient().getCenterColor() == -1)
-                colors = new int[]{
-                        gradientItem.getGradient().getStartColor(),
-                        gradientItem.getGradient().getEndColor()
-                };
-
-            else
-                colors = new int[]{
-                        gradientItem.getGradient().getStartColor(),
-                        gradientItem.getGradient().getCenterColor(),
-                        gradientItem.getGradient().getEndColor()
-                };
-
+        for (GradientItem gradientItem : gradientItemList)
             animationDrawable.addFrame
                     (new GradientDrawable(Gradient.getDrawableOrientation
-                            (gradientItem.getGradient().getOrientation()), colors), gradientItem.getDuration());
-        }
+                            (gradientItem.getGradient().getOrientation()),
+                            gradientItem.getGradient().getColors()),
+                            gradientItem.getDuration());
     }
 
     /**
      * Method to initialize gradient arraylist
      */
     private void initGradientList() {
-        for (Gradient gradient : gradientList) {
-            int[] colors;
-
-            if (gradient.getCenterColor() == -1)
-                colors = new int[]{
-                        gradient.getStartColor(),
-                        gradient.getEndColor()
-                };
-
-            else
-                colors = new int[]{
-                        gradient.getStartColor(),
-                        gradient.getCenterColor(),
-                        gradient.getEndColor()
-                };
-
+        for (Gradient gradient : gradientList)
             animationDrawable.addFrame(new GradientDrawable(Gradient.getDrawableOrientation
-                    (gradient.getOrientation()), colors), duration);
-        }
+                    (gradient.getOrientation()), gradient.getColors()), duration);
     }
 
     /**
@@ -511,17 +483,16 @@ public class GradientAnimation {
     }
 
     /**
-     * Method to initialize duration, enter duration and exit duration
+     * Method to initialize enter duration and exit duration
      */
     private void initDurations() {
-        if (gradientItemList.isEmpty()) {
-            if (duration > 0) {
-                enterDuration = duration;
-                exitDuration = duration;
-            }
-            animationDrawable.setEnterFadeDuration(enterDuration);
-            animationDrawable.setExitFadeDuration(exitDuration);
-        }
+        if(!(enterDuration>0))
+            enterDuration = duration/2;
+        if(!(exitDuration>0))
+            exitDuration = duration/2;
+
+        animationDrawable.setEnterFadeDuration(enterDuration);
+        animationDrawable.setExitFadeDuration(exitDuration);
     }
 
     //endregion

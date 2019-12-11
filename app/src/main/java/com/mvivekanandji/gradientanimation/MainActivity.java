@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mvivekanandji.gradientanimation.model.Gradient;
+import com.mvivekanandji.gradientanimation.model.GradientItem;
 
 /**
  * Copyright 2019 Vivekanand Mishra.
@@ -60,11 +61,20 @@ public class MainActivity extends AppCompatActivity {
 //
 //        gradientAnimationLayout.startAnimation();
 
+        String[] strings = new String[]{"#000000","#aaaaaa","ffffff","#eeeeee"};
+
         GradientAnimation.Builder builderButton = new GradientAnimation.Builder()
                 .setView(buttonStart)
-                .addGradient(Gradient.getInbuiltGradient("warm_flame"))
-                .addGradient(Gradient.getInbuiltGradient("night_Fade"))
-                .setDuration(2000);
+//                .addGradient(Gradient.getInbuiltGradient("black"))
+//                .addGradient(Gradient.getInbuiltGradient("white"))
+//                .addGradient(new Gradient(new int[]{22,22,22,22},Gradient.Orientation.BOTTOM_TOP))
+                .addGradientItem(new GradientItem(new Gradient("#000000","#222222","#aaddff"),2000))
+                .addGradientItem(new GradientItem(new Gradient(new String[]{"#000000","#008577","#eeeeee","#D81B60","#ffffff"}),2000))
+                .addGradientItem(new GradientItem(Gradient.getInbuiltGradient("white"),2000))
+//                .setEnterDuration(1500)
+//                .setExitDuration(1500)
+//                .setDuration(1000)
+                ;
 
         builderButton.build().startAnimation();
 

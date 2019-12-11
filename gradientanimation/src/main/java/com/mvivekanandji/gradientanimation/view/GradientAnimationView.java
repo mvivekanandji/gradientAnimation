@@ -83,15 +83,14 @@ public class GradientAnimationView extends View {
                 obtainStyledAttributes(attrs, R.styleable.GradientAnimationView,0,0);
 
         drawable = typedArray.getResourceId(R.styleable.GradientAnimationView_ga_drawable,R.drawable.anim_blue_purple);
+        duration = typedArray.getInt(R.styleable.GradientAnimationView_ga_duration, 1000);
+        enterDuration = typedArray.getInt(R.styleable.GradientAnimationView_ga_enter_duration, 1000);
+        exitDuration = typedArray.getInt(R.styleable.GradientAnimationView_ga_exit_duration, 1000);
 
-        if(typedArray.hasValue(R.styleable.GradientAnimationView_ga_duration)){
-            duration = typedArray.getInt(R.styleable.GradientAnimationView_ga_duration, 1000);
-            enterDuration = duration;
-            exitDuration = duration;
-        } else {
-            enterDuration = typedArray.getInt(R.styleable.GradientAnimationView_ga_enter_duration, 1000);
-            exitDuration = typedArray.getInt(R.styleable.GradientAnimationView_ga_exit_duration, 1000);
-        }
+        if(!typedArray.hasValue(R.styleable.GradientAnimationView_ga_enter_duration))
+            enterDuration = duration/2;
+        if(!typedArray.hasValue(R.styleable.GradientAnimationView_ga_exit_duration))
+            enterDuration = duration/2;
 
         alpha = typedArray.getInt(R.styleable.GradientAnimationView_ga_alpha,255);
         loop = typedArray.getBoolean(R.styleable.GradientAnimationView_ga_loop,true);
